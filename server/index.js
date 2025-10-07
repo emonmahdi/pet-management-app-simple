@@ -3,9 +3,20 @@ const app = express();
 const port = 5000;
 
 
+// demo data
+let pets = [
+    { id: 1, name: "Tommy", type: "Dog", age: 3 },
+    { id: 2, name: "Kitty", type: "Cat", age: 2 }
+  ];
+
 app.get('/', (req, res) => {
-    console.log('Pet Management Server')
+    res.send("Pet Management Server");
 });
+
+// get all pet api
+app.get('/pets', (req, res) => {
+    res.send(pets)
+})
 
 
 app.listen(port, () => {
