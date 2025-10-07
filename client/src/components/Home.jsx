@@ -11,7 +11,6 @@ const Home = () => {
       .then((data) => setPets(data));
   }, []);
 
-
   const handleAddPet = (e) => {
     e.preventDefault();
     const name = e.target.name.value;
@@ -31,6 +30,17 @@ const Home = () => {
         const newPets = [...pets, data];
         setPets(newPets);
         e.target.reset();
+      });
+  };
+
+  // Delete
+  const handleDelete = (id) => {
+    fetch(`http://localhost:5000/pets/${id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(() => {
+        setPets(pets.filter((pet) => pet.id !== id));
       });
   };
 
@@ -128,7 +138,7 @@ const Home = () => {
       <div>
         {pets.map((pet) => (
           <div
-            key={pet.id}
+            key={pet?.id}
             style={{ border: "1px solid gray", margin: "10px", padding: "5px" }}
           >
             <p>
@@ -158,6 +168,7 @@ const Home = () => {
                   borderRadius: "4px",
                   cursor: "pointer",
                 }}
+                onClick={() => handleDelete(pet?.id)}
               >
                 Delete
               </button>

@@ -29,6 +29,12 @@ app.post("/pets", (req, res) => {
   res.send(newPets);
 });
 
+// delete api
+app.delete('/pets/:id', (req, res) => {
+    const id = parseInt(req.params.id);
+    pets = pets.filter((pet) => pet.id !== id)
+    res.send({message: 'Pet deleted successfully', id})
+})
 
 app.listen(port, () => {
     console.log(`Server is Running Port ${port}`)
