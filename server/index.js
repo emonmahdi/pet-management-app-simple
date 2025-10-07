@@ -17,9 +17,17 @@ app.get('/', (req, res) => {
 });
 
 // get all pet api
-app.get('/pets', (req, res) => {
-    res.send(pets)
-})
+app.get("/pets", (req, res) => {
+  res.send(pets);
+});
+
+//add pet api
+app.post("/pets", (req, res) => {
+  const newPets = req.body;
+  newPets.id = pets.length + 1;
+  pets.push(newPets);
+  res.send(newPets);
+});
 
 
 app.listen(port, () => {
