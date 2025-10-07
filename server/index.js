@@ -8,12 +8,13 @@ app.use(cors());
 
 // demo data
 let pets = [
-    { id: 1, name: "Tommy", type: "Dog", age: 3 },
-    { id: 2, name: "Kitty", type: "Cat", age: 2 }
-  ];
+  { id: 1, name: "Tommy", type: "Dog", age: 3 },
+  { id: 2, name: "Kitty", type: "Cat", age: 2 },
+  { id: 3, name: "Tommy 2", type: "Dog", age: 2 },
+];
 
-app.get('/', (req, res) => {
-    res.send("Pet Management Server");
+app.get("/", (req, res) => {
+  res.send("Pet Management Server");
 });
 
 // get all pet api
@@ -30,11 +31,20 @@ app.post("/pets", (req, res) => {
 });
 
 // delete api
-app.delete('/pets/:id', (req, res) => {
-    const id = parseInt(req.params.id);
-    pets = pets.filter((pet) => pet.id !== id)
-    res.send({message: 'Pet deleted successfully', id})
-})
+app.delete("/pets/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  pets = pets.filter((pet) => pet.id !== id);
+  res.send({ message: "Pet deleted successfully", id });
+});
+
+//update api
+app.put("/pets/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const updatedData = req.body; // name,type,age
+  pets = pets.map((p) => (p.id === id ? { ...p, ...updatedData } : p));
+  const updatedPet = pets.find((p) => p.id === id);
+  res.send(updatedPet);
+});
 
 app.listen(port, () => {
     console.log(`Server is Running Port ${port}`)
